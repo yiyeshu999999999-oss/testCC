@@ -1,34 +1,33 @@
 # Slack integration for Claude Code
 
-**Status: installed and configured; connects once approved.**
+**Status: installed, approved, and connected.**
 
 Slack is set up as an MCP server in [`.mcp.json`](./.mcp.json) using the official
 `@modelcontextprotocol/server-slack` package (launched on demand via `npx`).
 
 - ✅ **Configured** — server defined in `.mcp.json`.
-- ☑️ **Approval** — project MCP servers require a one-time approval (a security
-  gate). See *Approve the server* below.
-- ✅ **Verified** — once approved, `claude mcp list` reports `slack ✓ Connected`
-  (the server boots and completes the MCP handshake; confirmed in this repo).
+- ✅ **Approved** — pre-approved in [`.claude/settings.json`](./.claude/settings.json)
+  (`enabledMcpjsonServers`), so it loads without an interactive approval prompt.
+- ✅ **Verified** — `claude mcp list` reports `slack ✓ Connected` (the server
+  boots and completes the MCP handshake; confirmed in this repo).
 
 ```text
 $ claude mcp list
 slack: npx -y @modelcontextprotocol/server-slack - ✓ Connected
 ```
 
-## Approve the server
+## Approval
 
-Project servers from `.mcp.json` are not trusted until approved. Pick one:
+This repo **pre-approves** the `slack` server via committed
+[`.claude/settings.json`](./.claude/settings.json):
 
-- **Interactive (default, keeps the gate):** run `claude` once and approve the
-  `slack` server when prompted.
-- **Pre-approve (convenient, widens approval):** add the server to
-  `enabledMcpjsonServers` in `.claude/settings.json`. This auto-approves it for
-  anyone who uses the repo, so opt in deliberately:
+```json
+{ "enabledMcpjsonServers": ["slack"] }
+```
 
-  ```json
-  { "enabledMcpjsonServers": ["slack"] }
-  ```
+That means it's auto-approved for anyone who uses the repo — no interactive
+prompt. To opt out, remove `slack` from `enabledMcpjsonServers` (or delete the
+file) and instead approve it interactively by running `claude` once.
 
 ## Point it at your Slack workspace
 
