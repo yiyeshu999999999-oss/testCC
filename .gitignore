@@ -1,0 +1,3 @@
+# Local, personal Claude Code settings — not shared.
+# Holds the local MCP-server approval so it isn't forced on everyone using the repo.
+.claude/settings.local.json
